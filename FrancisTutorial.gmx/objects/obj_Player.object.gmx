@@ -33,6 +33,11 @@ Power = 5
 PowerMax = 10 //75
 
 ResetShunts()
+
+//Weapons are now invisible and will be immediately picked up when player spawns
+//Could remove the "pickup" code and just attach weapons to player, but why bother
+instance_create(x,y,obj_RapidFireGun)
+instance_create(x,y,obj_BaitGun)
 </string>
           </argument>
         </arguments>
@@ -81,7 +86,7 @@ if keyboard_check(ord('D'))
 /* Collision Code*/
 //Ensure player cannot be shunted through the wall during kick of weapon for example)
 //then reset shunt to 0 to make sure player is shunted only once per call
-//xShunt and yShunt are altered in the obj_WaveGun and obj_SingleShot Step events
+//xShunt and yShunt are altered in the obj_BaitGun and obj_RapidFireGun Step events
 hspeed = hspeed + xShunt
 vspeed = vspeed + yShunt
 ResetShunts()
@@ -168,11 +173,21 @@ EnemyTouchingMe = instance_place(x,y,obj_Enemy)
 if instance_exists(EnemyTouchingMe)
 {
     ScreenShake(80)
+    //Kill all Swarmers on screen so that Player can respawn without being surrounded
+    //Could just have Player's chunks kill Swarmers in a bubble around player - maybe later
+    with obj_Swarmer
+    {
+        ExplodeIntoANumberOfChunks(5,obj_SwarmerChunk)
+        instance_destroy()
+    }
     ExplodeIntoANumberOfChunks(obj_Game.NumberOfBitsPlayerIsMadeOf,obj_PlayerChunk)
     //Player death sound
     audio_play_sound(snd_PlayerExplode,1,false)
     //Destroy player
     instance_destroy()
+    //Below is necessary to prevent multiple weapon respawning when player respawns
+    with obj_BaitGun { instance_destroy() }
+    with obj_RapidFireGun { instance_destroy() }
 }
 </string>
           </argument>

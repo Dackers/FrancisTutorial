@@ -114,27 +114,6 @@ if Mode = "Titles"
     {
         game_end()
     }
-} else if Mode = "Game"
-{
-    //Check that player exists
-    if instance_exists(obj_Player)
-    {
-        /* Power Bar */
-        BarIndent = 50
-        BarWidth = view_wport - (BarIndent * 2) //Makes the length of the bar span the width of the room, minus BarIndent on both sides
-        BarHeight = 20 //Sets height of bar at 20 pixels
-        BarTop = (view_hport - BarIndent) - BarHeight //Sets bottom of bar to begin 50 pixels above the bottom of screen
-        
-        PowerFraction = obj_Player.Power / obj_Player.PowerMax //Sets percentage of bar to fill based on Player power
-       
-        draw_set_color(c_green)
-        draw_set_alpha(0.7) 
-        //Draws outline of power bar
-        draw_rectangle(BarIndent, BarTop, BarIndent + BarWidth, BarTop + BarHeight, true)
-        //Draws color of power bar, filling in from left to right as player power increases
-        draw_rectangle(BarIndent, BarTop, BarIndent + (BarWidth * PowerFraction), BarTop + BarHeight, false)
-        draw_set_alpha(1)
-    }
 }
 </string>
           </argument>

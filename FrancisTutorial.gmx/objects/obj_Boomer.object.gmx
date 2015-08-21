@@ -25,10 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 5 / room_speed //Set frame speed of the ShrinkingEnemy sprite
-InitializeEnemyCollision(50,random(360))
+            <string>depth = 0
+image_speed = 5 / room_speed //Set frame speed of the ShrinkingEnemy sprite
+InitializeEnemyCollision(100,random(360))
 image_xscale = 0.5
 image_yscale = image_xscale
+image_alpha = 0.5
+ThingsEaten = 0
 </string>
           </argument>
         </arguments>
@@ -66,26 +69,34 @@ if instance_exists(NearestGlob)
         //...if so, can I get to it?
         if IHaveLineOfSightTo(NearestGlob)
         {
-            //...if so, head towards it
+            //...if so, head towards it...
             direction = point_direction(x,y,NearestGlob.x,NearestGlob.y)
-            //Eat it
+            //...when we are close enough to eat it...
             if DistanceToGlob &lt; EatRange
             {
-                with NearestGlob { instance_destroy() }
-                //Grow larger
-                GrowthRate = 0.1
-                MaximumSize = 2
-                if image_xscale &lt; MaximumSize
+                //...is it attached to a awarmer?
+                if instance_exists(NearestGlob.Host) //"NearestGlob" is the instance of obj_Glob closest to us. "Host" is the obj_Swarmer the Glob is sticking to. So this IDs whether the Glob we are about to eat also has a Swarmer stuck to it
                 {
-                    image_xscale = image_xscale + GrowthRate
-                    image_yscale = image_yscale + GrowthRate
-                    //Reduce size if near solid so he doesn't get stuck
-                    if place_meeting(x,y,obj_Solid)
+                    //...if so, tell it we're the one who ate it
+                    NearestGlob.Host.Eater = id
+                    ThingsEaten = ThingsEaten + 1
+                    //Grow larger
+                    GrowthRate = 0.25
+                    MaximumSize = 2
+                    if image_xscale &lt; MaximumSize
                     {
-                        image_xscale = image_xscale - GrowthRate
-                        image_yscale = image_yscale - GrowthRate
+                        image_xscale = image_xscale + GrowthRate
+                        image_yscale = image_yscale + GrowthRate
+                        //Reduce size if near solid so he doesn't get stuck
+                        if place_meeting(x,y,obj_Solid)
+                        {
+                            image_xscale = image_xscale - GrowthRate
+                            image_yscale = image_yscale - GrowthRate
+                        }
                     }
                 }
+                //...go ahead and eat it
+                with NearestGlob { instance_destroy() }
             }
         }
     }
@@ -102,6 +113,13 @@ EnemyCollisionWithSolids()
 /* Damage */
 if HitByProjectile()
 {
+    //If we have a awarmer inside us, explode
+    if ThingsEaten &gt; 0
+    {
+        instance_destroy()
+    }
+
+    /*
     //Shrink enemy
     image_xscale = image_xscale - 0.2
     image_yscale = image_xscale
@@ -115,6 +133,7 @@ if HitByProjectile()
         instance_destroy()
         audio_play_sound(snd_EnemyExplode,1,false)
     }
+    */
 }
 </string>
           </argument>

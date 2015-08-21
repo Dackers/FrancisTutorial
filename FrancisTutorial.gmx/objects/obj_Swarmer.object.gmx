@@ -25,11 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>State = "Idle"
+            <string>depth = 10
+State = "Idle"
 InitializeEnemyCollision(25,random(360))
 
 image_xscale = 0.6
 image_yscale = image_xscale
+
+Eater = noone
 </string>
           </argument>
         </arguments>
@@ -56,9 +59,13 @@ image_yscale = image_xscale
 if State = "Idle"
 {
     sprite_index = spr_Swarmer
-    //Wander around checking for line of sight to player
+    //Were we eaten by a Boomer?
+    if instance_exists(Eater)
+    {
+        State = "Eaten" //If this is true, the code in the boomer sets the "Eater" variable to the ID of the Boomer instance that at this Swarmer
+    //If not, wander around checking for line of sight to player
     //Draw line from Exploding Enemy to Player and see if Solid object is in way
-    if IHaveLineOfSightTo(obj_Player)
+    } else if IHaveLineOfSightTo(obj_Player)
     {
         //Check if looking in player's direction, with 90 degree FOV
         DirectionToPlayer = point_direction(x,y,obj_Player.x,obj_Player.y) //Angle to player
@@ -74,7 +81,13 @@ if State = "Idle"
 } else if State = "Alert"
 {
     sprite_index = spr_SwarmerAlert
-    if IHaveLineOfSightTo(obj_Player) //Even when alert, if player ducks behind solid object or dies, Enemy loses line of sight
+    
+    //If we are eaten by a Boomer because he ate a Glob stuck to us
+    if instance_exists(Eater)
+    {
+        State = "Eaten"
+    //if not...
+    } else if IHaveLineOfSightTo(obj_Player) //Even when alert, if player ducks behind solid object or dies, Enemy loses line of sight
     {
         //Seek the player
         direction = point_direction(x,y,obj_Player.x,obj_Player.y)
@@ -82,6 +95,18 @@ if State = "Idle"
     {
         //If Enemy loses line of sight, return to Idle state
         State = "Idle"
+    }
+} else if State = "Eaten"
+{
+    if instance_exists(Eater)
+    {
+        //move with the Boomer that ate us
+        x = Eater.x
+        y = Eater.y
+    } else
+    {
+        //Our eater has been destroyed!!
+        ExplodeIntoANumberOfChunks(25,obj_ExplodingEnemyChunk)
     }
 }
 
@@ -96,8 +121,8 @@ EnemyCollisionWithSolids()
 if HitByProjectile()
 {
     ScreenShake(25)
-    ExplodeIntoANumberOfChunks(25,obj_ExplodingEnemyChunk)
-    //ExplodeIntoANumberOfChunks(15,obj_SwarmerChunk)
+    //ExplodeIntoANumberOfChunks(25,obj_ExplodingEnemyChunk)
+    ExplodeIntoANumberOfChunks(15,obj_SwarmerChunk)
     //Enemy death sound
     audio_play_sound(snd_EnemyExplode,1,false)
     //Destroy enemy

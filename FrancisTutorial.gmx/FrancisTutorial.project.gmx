@@ -21,8 +21,8 @@
     <sprite>sprites\spr_SwarmerAlert</sprite>
     <sprite>sprites\spr_Swarmer</sprite>
     <sprite>sprites\spr_ExplodingEnemyChunk</sprite>
-    <sprite>sprites\spr_MachineGun</sprite>
-    <sprite>sprites\spr_SingleShot</sprite>
+    <sprite>sprites\spr_BaitGun</sprite>
+    <sprite>sprites\spr_RapidFireGun</sprite>
     <sprite>sprites\spr_Glob</sprite>
     <sprite>sprites\spr_GlobExplosion</sprite>
     <sprite>sprites\spr_Solid</sprite>
@@ -69,8 +69,8 @@
     <object>objects\obj_Bullet</object>
     <object>objects\obj_Glob</object>
     <object>objects\obj_GlobExplosion</object>
-    <object>objects\obj_WaveGun</object>
-    <object>objects\obj_SingleShot</object>
+    <object>objects\obj_BaitGun</object>
+    <object>objects\obj_RapidFireGun</object>
     <object>objects\obj_Solid</object>
     <object>objects\obj_Menu</object>
     <object>objects\obj_Game</object>

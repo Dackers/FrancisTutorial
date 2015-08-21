@@ -28,8 +28,9 @@
             <string>ScreenShakeAmount = 0
 
 /* Enemy Spawning */
-SecondsBetweenEnemySpawns = 1
+SecondsBetweenEnemySpawns = 0.1
 SecondsSinceLastEnemySpawn = 0
+MaximumSwarmers = 500
 
 /* Global constants */
 NumberOfBitsPlayerIsMadeOf = 9
@@ -73,8 +74,11 @@ if SecondsSinceLastEnemySpawn &gt;= SecondsBetweenEnemySpawns
         SpawnX = choose(0, room_width)
         SpawnY = random(room_height)
     }
-    //Respawns enemies in random locations, with Exploding Enemies having more of a chance of spawning than Shrinking Enemies    
-    instance_create(SpawnX, SpawnY, choose(obj_Boomer,obj_Swarmer,obj_Swarmer,obj_Swarmer,obj_Swarmer,obj_Swarmer,obj_Swarmer,obj_Swarmer,obj_Swarmer))
+    //Respawns Swarmers
+    if instance_number(obj_Swarmer) &lt; MaximumSwarmers
+    {
+        instance_create(SpawnX, SpawnY, choose(obj_Swarmer))
+    }
     SecondsSinceLastEnemySpawn = 0
 }
 
