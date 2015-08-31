@@ -72,7 +72,6 @@ if keyboard_check(ord('W'))
 if keyboard_check(ord('S'))
 {
     vspeed = MySpeed
-
 }
 if keyboard_check(ord('A'))
 {
@@ -177,8 +176,8 @@ if instance_exists(EnemyTouchingMe)
     //Could just have Player's chunks kill Swarmers in a bubble around player - maybe later
     with obj_Swarmer
     {
-        ExplodeIntoANumberOfChunks(5,obj_SwarmerChunk)
-        instance_destroy()
+        //Make Swarners move away from Player after death
+        direction = point_direction(obj_Player.x,obj_Player.y,x,y)
     }
     ExplodeIntoANumberOfChunks(obj_Game.NumberOfBitsPlayerIsMadeOf,obj_PlayerChunk)
     //Player death sound

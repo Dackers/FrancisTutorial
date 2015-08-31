@@ -4,10 +4,8 @@ IncomingProjectile = instance_place(x,y,obj_Projectile)
 if instance_exists(IncomingProjectile)
 {   
     //if the projectile is NOT a player chunk
-    if IncomingProjectile.object_index != obj_PlayerChunk
-    {
-        with IncomingProjectile {instance_destroy()}
-    }
+    ProjectileHitSomething(IncomingProjectile)
+
     //If there was one send back true
     return true
 } else

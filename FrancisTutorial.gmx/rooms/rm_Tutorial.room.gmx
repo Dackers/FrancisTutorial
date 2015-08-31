@@ -12,7 +12,7 @@
   <showcolour>-1</showcolour>
   <code>InitializeRoom()
 InitializePlayableLevel()
-GenerateLevel()</code>
+instance_create(0,0,obj_Tutorial)</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>
   <clearDisplayBuffer>-1</clearDisplayBuffer>

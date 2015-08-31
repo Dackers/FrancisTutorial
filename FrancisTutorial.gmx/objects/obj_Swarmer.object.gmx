@@ -106,7 +106,7 @@ if State = "Idle"
     } else
     {
         //Our eater has been destroyed!!
-        ExplodeIntoANumberOfChunks(25,obj_ExplodingEnemyChunk)
+        ExplodeIntoANumberOfChunks(25,obj_SwarmerChunk)
     }
 }
 
@@ -118,9 +118,15 @@ StayInsideRoom()
 EnemyCollisionWithSolids()
 
 /* Damage */
-if HitByProjectile()
+IncomingProjectile = instance_place(x,y,obj_Projectile)
+if instance_exists(IncomingProjectile)
 {
     ScreenShake(25)
+    //Create swarmer splat and tuyrn it to face away from direction of projectile
+    MySplat = instance_create(x,y,obj_SwarmerSplat)
+    MySplat.image_angle = IncomingProjectile.image_angle
+    //Destroy projectile so long as it's not player chunk
+    ProjectileHitSomething(IncomingProjectile)
     //ExplodeIntoANumberOfChunks(25,obj_ExplodingEnemyChunk)
     ExplodeIntoANumberOfChunks(15,obj_SwarmerChunk)
     //Enemy death sound

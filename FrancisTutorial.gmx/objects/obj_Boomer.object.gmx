@@ -25,12 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = 0
-image_speed = 5 / room_speed //Set frame speed of the ShrinkingEnemy sprite
+            <string>image_speed = 5 / room_speed //Set frame speed of the ShrinkingEnemy sprite
 InitializeEnemyCollision(100,random(360))
 image_xscale = 0.5
 image_yscale = image_xscale
-image_alpha = 0.5
 ThingsEaten = 0
 </string>
           </argument>
@@ -81,8 +79,9 @@ if instance_exists(NearestGlob)
                     NearestGlob.Host.Eater = id
                     ThingsEaten = ThingsEaten + 1
                     //Grow larger
-                    GrowthRate = 0.25
+                    GrowthRate = 0.25 / ThingsEaten //Always be careful when dividing things by a variable that may be &lt;=0, but we set ThingsEaten to + 1 right before this
                     MaximumSize = 2
+                    image_alpha = 0.4 //Become more transparent after eating Swarmers
                     if image_xscale &lt; MaximumSize
                     {
                         image_xscale = image_xscale + GrowthRate
@@ -116,6 +115,7 @@ if HitByProjectile()
     //If we have a awarmer inside us, explode
     if ThingsEaten &gt; 0
     {
+        ExplodeIntoANumberOfChunks(25 * ThingsEaten,obj_BoomerChunk)
         instance_destroy()
     }
 

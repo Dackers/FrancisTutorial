@@ -51,7 +51,13 @@
             <string>if keyboard_check_pressed(vk_escape)
 {
     //This allows us to hit escape and bring up menu, then hit escape to close menu
-    if Mode = "Game" { Mode = "Titles" } else { Mode = "Game" }
+    if Mode != "Titles" { Mode = "Titles" } else { Mode = "Game" }
+}
+
+//If all enemies are destroyed, change Mode to Victory condition so that player can go to next level
+if instance_number(obj_Enemy) &lt; 1 and room = rm_Level01
+{
+    if Mode = "Game" { Mode = "Victory" }
 }
 </string>
           </argument>
@@ -107,12 +113,34 @@ if Mode = "Titles"
     {
         DeleteInventory() //Delete save file to start a new game
         Mode = "Game"
-        room_goto(rm_Level01)
+        room_goto(rm_Tutorial)
     }
     
     if ButtonPressed("Quit")
     {
         game_end()
+    }
+} else if Mode = "Victory"
+{
+     //Sets x coord to one-half the width of the port but the y value to 0
+    x = view_wport[0] / 2
+    y = 200
+    
+    CurrentY = y
+    Margin = 10
+
+    draw_set_halign(fa_center)
+    draw_set_font(fnt_Menu)
+    DrawTextAndUpdateCurrentY("Virus Eliminated")
+    
+    CurrentY = CurrentY + 50
+    
+    if ButtonPressed("Next Level")
+    {
+        Mode = "Game"
+        //Go to Level 1 again, but since the room's creaton code randomizes the
+        //room each time it's a new level
+        room_goto(rm_Level01)
     }
 }
 </string>

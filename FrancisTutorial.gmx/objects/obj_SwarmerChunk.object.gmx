@@ -28,10 +28,6 @@
             <string>/* Setup to send bits flying out at random speed and direction */
 speed = random_range(500,1000) / room_speed
 direction = random(360)
-image_angle = random(360)
-
-image_xscale = 0.5
-image_yscale = image_xscale
 </string>
           </argument>
         </arguments>
@@ -61,6 +57,8 @@ Deceleration = 2000 / (room_speed * room_speed) // At 30fps this  would be a cha
 if speed &gt; Deceleration
 {
     /* So long as we have some speed to lose */
+    //Face the direction we're going
+    image_angle = direction
     //Reduce speed by deceleration
     speed = speed - Deceleration
 } else

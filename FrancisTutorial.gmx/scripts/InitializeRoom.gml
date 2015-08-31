@@ -17,5 +17,5 @@ view_hport = global.ScreenHeight
 //Gamemaker requirement for screen size, view, etc.
 surface_resize(application_surface,global.ScreenWidth,global.ScreenHeight)
 
-LoadInventory() //Load player inventory when room is created
+//LoadInventory() //Load player inventory when room is created
 SaveProgress()

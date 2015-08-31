@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -63,20 +63,21 @@ SecondsSinceLastEnemySpawn = SecondsSinceLastEnemySpawn + 1 / room_speed
 if SecondsSinceLastEnemySpawn &gt;= SecondsBetweenEnemySpawns
 {
     //Spawn Enemy
-    //Code to ensure enemies spawn outside the room border (makes sure they don't spawn just in corners)
-    if choose(true,false)
+    //If there aren't too many Swarmers (and there is at least 1 Boomer)
+    if instance_number(obj_Swarmer) &lt; MaximumSwarmers and instance_number(obj_Boomer) &gt; 0 and room = rm_Level01
     {
-        SpawnX = random(room_width)
-        SpawnY = choose(0, room_height)
-
-    } else
-    {
-        SpawnX = choose(0, room_width)
-        SpawnY = random(room_height)
-    }
-    //Respawns Swarmers
-    if instance_number(obj_Swarmer) &lt; MaximumSwarmers
-    {
+        //Code to ensure enemies spawn outside the room border (makes sure they don't spawn just in corners)
+        //Choose where to spawn one
+        if choose(true,false)
+        {
+            SpawnX = random(room_width)
+            SpawnY = choose(0, room_height)
+        } else
+        {
+            SpawnX = choose(0, room_width)
+            SpawnY = random(room_height)
+        }
+        //Spawn one there
         instance_create(SpawnX, SpawnY, choose(obj_Swarmer))
     }
     SecondsSinceLastEnemySpawn = 0

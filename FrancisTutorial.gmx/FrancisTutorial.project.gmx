@@ -21,18 +21,23 @@
     <sprite>sprites\spr_SwarmerAlert</sprite>
     <sprite>sprites\spr_Swarmer</sprite>
     <sprite>sprites\spr_ExplodingEnemyChunk</sprite>
+    <sprite>sprites\spr_BoomerChunk</sprite>
     <sprite>sprites\spr_BaitGun</sprite>
     <sprite>sprites\spr_RapidFireGun</sprite>
     <sprite>sprites\spr_Glob</sprite>
     <sprite>sprites\spr_GlobExplosion</sprite>
     <sprite>sprites\spr_Solid</sprite>
     <sprite>sprites\spr_PowerUp</sprite>
+    <sprite>sprites\spr_Tint</sprite>
+    <sprite>sprites\spr_SwarmerSplat</sprite>
+    <sprite>sprites\spr_BoomerSplat</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgr_Primary</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
+    <script>scripts\GenerateLevel.gml</script>
     <script>scripts\ExplodeIntoANumberOfChunks.gml</script>
     <script>scripts\StayInsideRoom.gml</script>
     <script>scripts\HitByProjectile.gml</script>
@@ -52,16 +57,20 @@
     <script>scripts\DeleteInventory.gml</script>
     <script>scripts\LoadProgress.gml</script>
     <script>scripts\IHaveLineOfSightTo.gml</script>
+    <script>scripts\ProjectileHitSomething.gml</script>
+    <script>scripts\InitializePlayableLevel.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_Title</font>
     <font>fonts\fnt_Menu</font>
+    <font>fonts\fnt_Tutorial</font>
   </fonts>
   <objects name="objects">
     <object>objects\obj_Player</object>
     <object>objects\obj_PlayerChunk</object>
     <object>objects\obj_Enemy</object>
     <object>objects\obj_Boomer</object>
+    <object>objects\obj_BoomerChunk</object>
     <object>objects\obj_Swarmer</object>
     <object>objects\obj_ExplodingEnemyChunk</object>
     <object>objects\obj_SwarmerChunk</object>
@@ -75,11 +84,15 @@
     <object>objects\obj_Menu</object>
     <object>objects\obj_Game</object>
     <object>objects\obj_PowerUp</object>
+    <object>objects\obj_Tint</object>
+    <object>objects\obj_SwarmerSplat</object>
+    <object>objects\obj_BoomerSplat</object>
+    <object>objects\obj_Tutorial</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_Start</room>
     <room>rooms\rm_Level01</room>
-    <room>rooms\rm_Level02</room>
+    <room>rooms\rm_Tutorial</room>
   </rooms>
   <help>
     <rtf>help.rtf</rtf>
